@@ -8,9 +8,11 @@ export default function AuthPage({ setAuth }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    const baseApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
     const url = isLogin
-      ? 'http://localhost:5000/api/users/login'
-      : 'http://localhost:5000/api/users/register';
+      ? `${baseApiUrl}/api/users/login`
+      : `${baseApiUrl}/api/users/register`;
 
     const payload = isLogin ? { email, password } : { name, email, password };
 
@@ -28,10 +30,8 @@ export default function AuthPage({ setAuth }) {
       }
 
       if (data.token) {
-        // If login is successful, pass the token and name to App.jsx
         setAuth(data.token, data.name);
       } else {
-        // If registration is successful, alert the user and switch to login view
         alert('Registration successful! Please log in.');
         setIsLogin(true);
         setName('');
