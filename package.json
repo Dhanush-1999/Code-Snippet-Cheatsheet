@@ -1,0 +1,13 @@
+{
+  "name": "monorepo-cheatsheet",
+  "version": "1.0.0",
+  "scripts": {
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm start",
+    "vercel-build": "cd frontend && npm install && npm run build && cd ../backend && npm install"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
+}
