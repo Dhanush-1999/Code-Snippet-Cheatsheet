@@ -27,7 +27,7 @@ export default function App() {
   const fetchSnippets = async () => {
     try {
       const storedToken = localStorage.getItem('token');
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/snippets`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/snippets`, {
         headers: { 'x-auth-token': storedToken },
       });
       if (!response.ok) throw new Error('Failed to fetch snippets');
@@ -49,7 +49,7 @@ export default function App() {
   const handleAddSnippet = async (newSnippetData) => {
     try {
       const storedToken = localStorage.getItem('token');
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/snippets`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/snippets`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ export default function App() {
       if (!response.ok) throw new Error('Failed to create snippet');
       const createdSnippet = await response.json();
       setSnippets([createdSnippet, ...snippets]);
-    } catch (error) { // FIXED: Was 'catch (error)_'
+    } catch (error) {
       console.error(error);
     }
   };
@@ -68,7 +68,7 @@ export default function App() {
   const handleDeleteSnippet = async (idToDelete) => {
     try {
       const storedToken = localStorage.getItem('token');
-      await fetch(`${import.meta.env.VITE_API_URL}/api/snippets/${idToDelete}`, {
+      await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/snippets/${idToDelete}`, {
         method: 'DELETE',
         headers: { 'x-auth-token': storedToken },
       });
@@ -83,7 +83,7 @@ export default function App() {
     setExplanation('');
     try {
       const storedToken = localStorage.getItem('token');
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/ai/explain`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/ai/explain`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -120,11 +120,14 @@ export default function App() {
   return (
     <div>
       <header className="app-header">
-        <h1>My Code Cheatsheet</h1>
+        <div className="logo-container">
+          <img src="/logo.png" alt="App Logo" className="logo-image" />
+          <h1>Code Cheatsheet</h1>
+        </div>
         <div className="user-info">
           <span>Welcome, {userName}</span>
           <button onClick={() => handleSetAuth(null, null)}>Logout</button>
-        </div> {/* FIXED: Was '}' */}
+        </div>
       </header>
       <hr />
       <SnippetForm onAddSnippet={handleAddSnippet} />
