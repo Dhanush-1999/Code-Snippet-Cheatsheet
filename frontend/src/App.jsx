@@ -121,7 +121,7 @@ export default function App() {
     <div>
       <header className="app-header">
         <div className="logo-container">
-          <img src="/logo.png" alt="App Logo" className="logo-image" />
+          <img src="/Preview.png" alt="App Logo" className="logo-image" />
           <h1>Code Cheatsheet</h1>
         </div>
         <div className="user-info">
